@@ -29,7 +29,7 @@ export async function getStaticProps({
     params
 }: GetStaticPropsContext<PageParams>): Promise<GetStaticPropsResult<ContentPageProps>> {
     try {
-        let response = await fetch('http://localhost:3000/api/getPost?id=' + params?.id);
+        let response = await fetch('https://sergiovalbuena/next-mongo-crud/api/getPost?id=' + params?.id);
 
         let responseFromServer: ResponseFromServer = await response.json();
 
@@ -64,7 +64,7 @@ export async function getStaticProps({
 
 
 export async function getStaticPaths() {
-    let posts = await fetch('http://localhost:3000/api/getPosts');
+    let posts = await fetch('https://sergiovalbuena/next-mongo-crud/api/getPosts');
 
     let postFromServer: [Post] = await posts.json();
     return {
@@ -90,7 +90,7 @@ export default function EditPost({ post: { _id, title, content } }: ContentPageP
         e.preventDefault();
         if (postTitle && postContent) {
             try {
-                let response = await fetch('http://localhost:3000/api/editPost?id=' + _id, {
+                let response = await fetch('https://sergiovalbuena/next-mongo-crud/api/editPost?id=' + _id, {
                     method: 'POST',
                     body: JSON.stringify({
                         title: postTitle,
