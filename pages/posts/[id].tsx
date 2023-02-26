@@ -33,6 +33,11 @@ export async function getStaticProps({
 
         let responseFromServer: ResponseFromServer = await response.json();
 
+        // Check if response is empty
+        if (!responseFromServer._id) {
+            throw new Error('Post not found');
+        }
+
         return {
             // Passed to the page component as props
             props: {
@@ -55,8 +60,8 @@ export async function getStaticProps({
             }
         }
     }
-
 }
+
 
 export async function getStaticPaths() {
     let posts = await fetch('http://localhost:3000/api/getPosts');
@@ -110,7 +115,7 @@ export default function EditPost({ post: { _id, title, content } }: ContentPageP
     }
 
     // no such post exists
-    if (!title && !content && !id && process.browser) {
+    if (!title && !content && !_id && process.browser) {
         return window.location.href = '/';
     }
 
